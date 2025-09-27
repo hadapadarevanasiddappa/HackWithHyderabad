@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Object Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+        body { background: #f0f2f5; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* Navbar */
+        header { background: #1e88e5; padding: 15px 30px; color: white; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 6px rgba(0,0,0,0.2);}
+        header h1 { font-size: 1.8em; font-weight: 700; }
+        nav a { color: white; margin-left: 25px; text-decoration: none; font-weight: 500; transition: 0.3s; }
+        nav a:hover { color: #ffeb3b; }
+
+        /* Main section */
+        main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px 20px; }
+
+        .upload-card { background: white; padding: 40px 30px; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); max-width: 600px; width: 100%; text-align: center; transition: transform 0.3s; }
+        .upload-card:hover { transform: translateY(-5px); }
+
+        .upload-card h2 { margin-bottom: 20px; color: #1e88e5; }
+        input[type="file"] { margin: 20px 0; padding: 5px; }
+        button { background: #1e88e5; color: white; border: none; padding: 12px 30px; font-size: 1.05em; border-radius: 6px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #1565c0; }
+
+        .error { color: red; margin-top: 10px; }
+
+        .result { margin-top: 30px; text-align: center; animation: fadeIn 0.5s; }
+        .result img { max-width: 100%; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
+        .detections { margin-top: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+        .detections span { background: #e3f2fd; color: #1e88e5; padding: 8px 14px; border-radius: 20px; font-weight: 500; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        footer { background: #1e88e5; color: white; text-align: center; padding: 20px 10px; margin-top: auto; }
+        footer a { color: white; margin: 0 10px; text-decoration: none; }
+        footer a:hover { color: #ffeb3b; }
+
+        @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+        @media (max-width: 600px) {
+            .upload-card { padding: 30px 20px; }
+            nav a { margin-left: 15px; font-size: 0.9em; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Safety Detection</h1>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Login</a>
+    </nav>
+</header>
+
+<main>
+    <div class="upload-card">
+        <h2>Upload Your Image</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <br>
+            <button type="submit">Detect Objects</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if result_img %}
+            <div class="result">
+                <img src="{{ result_img }}" alt="Result Image">
+                <div class="detections">
+                    {% for obj in detections %}
+                        <span>{{ obj }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</main>
+
+<footer>
+    &copy; 2025 Safety Detection | 
+    <a href="#">Twitter</a> |
+    <a href="#">LinkedIn</a> |
+    <a href="#">GitHub</a>
+</footer>
+
+</body>
+</html>

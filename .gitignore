@@ -1,0 +1,20 @@
+# Ignore datasets
+dataset/
+data/
+*.zip
+*.rar
+
+# Ignore trained models
+models/
+*.h5
+*.pt
+*.pkl
+
+# Ignore temporary files
+__pycache__/
+*.log
+*.tmp
+
+# Ignore system files
+.DS_Store
+Thumbs.db
